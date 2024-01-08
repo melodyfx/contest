@@ -142,6 +142,15 @@ func getConfig(cfg *ini.File) error {
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error converting concurrency_num(string) to int:%s", err.Error()))
 	}
+	intervalEnable = section.Key("interval_enable").String()
+	if strings.ToUpper(intervalEnable) != "ON" && strings.ToUpper(intervalEnable) != "OFF" {
+		return errors.New(fmt.Sprintf("参数interval_enable设置有误:%s", intervalEnable))
+	}
+
+	interval, err = section.Key("interval").Int()
+	if err != nil {
+		return errors.New(fmt.Sprintf("Error converting interval(string) to int:%s", err.Error()))
+	}
 	dim, err = section.Key("dim").Int()
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error converting dim(string) to int:%s", err.Error()))
